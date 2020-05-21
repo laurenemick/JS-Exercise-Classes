@@ -181,6 +181,10 @@ class Instructor extends Lambdasian{
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`;
   }
+  studentGrade(student){ // Stretch challenge
+    let plusOrMinus = Math.random() < 0.5 ? -1 : 1; // f < 0.5 then -1, else 1
+    return student.grade = student.grade + ((Math.floor(Math.random() * 10)) * plusOrMinus);
+  }
 }
 
 const instructorOne = new Instructor({
@@ -213,6 +217,7 @@ class Student extends Lambdasian{
     this.previousBackground = att.previousBackground;
     this.className = att.className;
     this.favSubjects = att.favSubjects;
+    this.grade = Math.floor(Math.random() * 100); // Stretch challenge addition
   }
   listSubjects(){
     return `Loving ${this.favSubjects}!`;
@@ -222,6 +227,13 @@ class Student extends Lambdasian{
   }
   sprintChallenge(subject){
     return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+  graduate(){ //Stretch challenge
+    if (this.grade >= 70){
+      return `You've graduated with a passing score of ${this.grade}%.`
+    } else {
+      return "Send back for grading";
+    }
   }
 }
 
@@ -286,11 +298,15 @@ console.log(projectManagerOne.debugsCode(studentOne, 'classes'));
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
-    - Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
+    - Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's)
+     that will randomly add or subtract points to a student's grade. _Math.random_ will help.
     - Add a graduate method to a student.
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
-      + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
+      + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to 
+      increase their score.
 */
+
+console.log(studentOne.graduate());
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
