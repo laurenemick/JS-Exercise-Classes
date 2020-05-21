@@ -41,8 +41,36 @@ class Airplane {
 */
 
 class Person {
-
+  constructor(attributes){
+    this.name = attributes.name;
+    this.age = attributes.age;
+    this.stomach = [];
+  }
+  eat(edible){
+    if (this.stomach.length < 10) {
+      this.stomach.push(edible);
+    }
+  }
+  poop(){
+    this.stomach = [];
+  }
+  toString(){
+    return `${this.name}, ${this.age}`;
+  }
 }
+
+const personOne = new Person({
+  name: 'Lauren',
+  age: 24
+});
+
+console.log(personOne.toString());
+personOne.eat("chicken");
+personOne.eat("steak");
+personOne.eat("pork");
+console.log(personOne.stomach);
+personOne.poop();
+console.log(personOne.stomach);
 
 /*
   TASK 2
@@ -59,8 +87,41 @@ class Person {
 */
 
 class Car {
+  constructor(att){
+    this.model = att.model;
+    this.milesPerGallon = att.milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+  fill(gallons){
+    this.tank = this.tank + gallons;
+  }
+  drive(distance){
+    const gallonsOver = distance / this.milesPerGallon - this.tank;
+    const distanceOver = gallonsOver * this.milesPerGallon;
+    const drivableMiles = distance - distanceOver;
 
+    if (this.tank > distance / this.milesPerGallon) {
+      this.odometer = this.odometer + distance;
+      this.tank = this.tank - distance / this.milesPerGallon;
+    } else {
+      this.odometer = this.odometer + drivableMiles;
+      this.tank = 0;
+      return `I ran out of fuel at ${this.odometer} miles!`;
+    }
+  }
 }
+
+const carOne = new Car({
+  model: "Camry", 
+  milesPerGallon: 25
+});
+
+carOne.fill(2);
+console.log(carOne.tank);
+console.log(carOne.drive(55));
+console.log(carOne.odometer);
+console.log(carOne.tank);
 
 /*
   TASK 3
@@ -75,8 +136,23 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-
+  constructor(att){
+    this.name = att.name;
+    this.age = att.age;
+    this.location = att.location;
+  }
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}!`;
+  }
 }
+
+const lauren = new Lambdasian({
+  name: 'Lauren',
+  age: 24,
+  location: 'Seattle'
+})
+
+console.log(lauren.speak());
 
 /*
   TASK 4
@@ -92,9 +168,29 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
-
+class Instructor extends Lambdasian {
+  constructor(att){
+    super(att);
+    this.specialty = att.specialty;
+    this.favLanguage = att.favLanguage;
+    this.catchPhrase = att.catchPhrase;
+  }
+  demo(subject){
+    return `Today we are learning about ${subject}`;
+  }
+  grade(student, subject){
+    return `${student.name} receives a perfect score on ${subject}`;
+  }
 }
+
+const instructorOne = new Instructor({
+  name: 'Jamie',
+  age: 48,
+  location: 'Omaha',
+  specialty: 'redux',
+  favLanguage: 'JavaScript',
+  catchPhrase: 'Don/t forget the homies'
+});
 
 /*
   TASK 5
@@ -111,9 +207,41 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian {
+  constructor(att){
+    super(att);
+    this.previousBackground = att.previousBackground;
+    this.className = att.className;
+    this.favSubjects = att.favSubjects;
+  }
+  listSubjects(){
+    return `Loving ${this.favSubjects}!`;
+  }
+  PRAssignment(subject){
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+  sprintChallenge(subject){
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  }
 }
+
+const studentOne = new Student({
+  name: 'Lauren',
+  age: 24,
+  location: 'Seattle',
+  previousBackground: 'Tech sales',
+  className: 'Web32',
+  favSubjects: ['HTML', 'CSS', 'JS']
+});
+
+console.log(instructorOne);
+console.log(instructorOne.demo('classes'));
+console.log(instructorOne.grade(studentOne, 'classes'));
+
+console.log(studentOne.listSubjects());
+console.log(studentOne.PRAssignment('classes'));
+console.log(studentOne.sprintChallenge('Web Fundamentals'));
+
 
 /*
   TASK 6
